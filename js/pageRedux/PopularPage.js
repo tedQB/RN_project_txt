@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, FlatList,RefreshControl, ActivityIndicator } from 'react-native';
+import { Platform, StyleSheet, Text, View, FlatList,RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 import NavigationUtil from '../navigator/NavigationUtil';
 import {connect} from 'react-redux';
 import actions from '../action/index'
 import PopularItem from '../common/PopularItem'
+import Toast from 'react-native-easy-toast'
+//import NavigationBar from '../common/NavigationBar';
+import FavoriteDao from "../expand/dao/FavoriteDao";
+import {FLAG_STORAGE} from "../expand/dao/DataStore";
+//import FavoriteUtil from "../util/FavoriteUtil";
+
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 const THEME_COLOR='red';
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
 type Props = {};
+
+
 
 
 export default class PopularPage extends Component<Props> {
@@ -94,6 +103,7 @@ class PopularTabCao extends Component<Props>{
     }
 }
 
+const pageSize = 10;//设为常量，防止修改
 
 class PopularTab extends Component<Props>{
     constructor(props){
@@ -109,7 +119,7 @@ class PopularTab extends Component<Props>{
     renderItem(data){
         const item = data.item;
         return <PopularItem
-            item={item }
+            projectModel={item}
             onSelect={()=>{}}
         />
     }
@@ -139,10 +149,26 @@ class PopularTab extends Component<Props>{
             </View>
     }
 
-    loadData(loadMore){
-        //const {onLoadPopularData} = this.props;
+    loadData(loadMore,refreshFavorite){
+        const {onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite} = this.props;
+        const store =this._store();
         const url = this.genFetchUrl(this.storeName);
-        this.props.onRefreshPopular(this.storeName,url)
+
+        if(loadMore){
+            onLoadMorePopular(
+                this.storeName,
+                ++store.pageIndex,
+                pageSize,
+                store.items,
+                favoriteDao,
+                callback=>{
+                    this.refs.toast.show('没有更多了');
+                })
+        }else if(refreshFavorite){
+            onFlushPopularFavorite(this.storeName,store.pageIndex,pageSize,store.items,favoriteDao)
+        }else{
+            onRefreshPopular(this.storeName,url,pageSize,favoriteDao)
+        }
 
     }
 
@@ -162,13 +188,12 @@ class PopularTab extends Component<Props>{
                 hideLoadingMore:true
             }
         }
-        console.log('this.props',this.props);
 
         return (<View style={{flex:1, marginTop:30 }}>
             <FlatList
                 data = {store.items}
                 renderItem={data=>this.renderItem(data)}
-                keyExtractor={item=>''+item.id}
+                keyExtractor={item => "" + item.item.id}
                 refreshControl={
                     <RefreshControl
                         title={'loading'}
@@ -181,9 +206,24 @@ class PopularTab extends Component<Props>{
                 }
                 ListFooterComponent={()=>this.genIndicator()}
                 onEndReached={()=>{
-                    this.loadData(true);
+                    console.log('---onEndReached----');
+                    setTimeout(()=>{
+                        if(this.canLoadMore){
+                            this.loadData(true);
+                            this.canLoadMore = false;
+                        }
+                    },100);
+
                 }}
                 onEndReachedThreshold={0.5}
+                onMomentumScrollBegin={()=>{
+                    this.canLoadMore =true;
+                    console.log('---onMomentumScrollBegin----');
+                }}
+
+            />
+            <Toast ref={'toast'}
+                   position={'center'}
             />
         </View>
         )
@@ -195,8 +235,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>({
-    onRefreshPopular: (storeName, url) => dispatch(actions.onRefreshPopular(storeName,url))
-
+    //onRefreshPopular: (storeName, url) => dispatch(actions.onRefreshPopular(storeName,url))
+    onRefreshPopular:(storeName,url,pageSize,favoriteDao)=>dispatch(actions.onRefreshPopular(storeName,url,pageSize,favoriteDao)),
+    onLoadMorePopular:(storeName,pageIndex,pageSize,items,favoriteDao,callBack)=>dispatch(actions.onLoadMorePopular(storeName,pageIndex,pageSize,items,favoriteDao,callBack)),
+    onFlushPopularFavorite:(storeName,pageIndex,pageSize,items,favoriteDao)=>dispatch(actions.onFlushPopularFavorite(storeName,pageIndex,pageSize,items,favoriteDao)),
 })
 
 const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab)

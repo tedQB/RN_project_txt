@@ -1,7 +1,9 @@
 import { onThemeChange } from './theme';
-import { onLoadPopularData } from './popular'
+import { onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite } from './popular'
 
 export default {
     onThemeChange,
-    onLoadPopularData
+    onRefreshPopular,
+    onLoadMorePopular,
+    onFlushPopularFavorite,
 }

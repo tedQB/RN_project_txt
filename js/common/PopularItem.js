@@ -4,7 +4,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export default class PopularItem extends Component <Props> {
     render() {
-        const {item} = this.props;
+        const {projectModel} = this.props;
+        const item=projectModel;
         if(!item||!item.owner) return null;
         let favoriteButton = <TouchableOpacity
                 style={{padding:6}}
