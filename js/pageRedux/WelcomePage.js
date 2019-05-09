@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-//import NavigationUtil from '../navigator/NavigationUtil'
+import NavigationUtil from '../navigator/NavigationUtil'
 
 type Props = {};
 
@@ -14,13 +14,14 @@ export default class WelcomePage extends Component<Props> {
             // NavigationUtil.resetToHomePage({
             //     navigation:this.props.navigation
             // })
-        }, 100 );
+        }, 1000 );
     }
     componentWillMount(){ 
         this.timer&&clearTimeout(this.timer)
     }
 
     render() {
+        NavigationUtil.navigation = this.props.navigation;
         return (
             <View style={styles.container}>
                 <Text style={styles.welcome}>Welcome</Text>
