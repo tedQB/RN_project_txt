@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import NavigationUtil from '../navigator/NavigationUtil'
+import NavigationUtil from '../navigator/NavigationUtil';
+import {connect} from "react-redux";
+import actions from "../action";
+
 import DynamicTabNavigator from '../navigator/ReduxNavigator/DynamicTabNavigator'
 
 type Props = {};
 
 
-export default class HomePage extends Component<Props> {
+class HomePage extends Component<Props> {
 
     render(){
-        //NavigationUtil.navigation = this.props.navigation;
+
+        const {theme} = this.props;
+        NavigationUtil.navigation = this.props.navigation;
+
         return <DynamicTabNavigator />
     }
 
 }
 
+const mapStateToProps = state=>({
+    nav:state.nav,
+    theme:state.theme.theme,
+});
+
+export default connect(mapStateToProps)(HomePage);
 
 const styles = StyleSheet.create({
     container: {

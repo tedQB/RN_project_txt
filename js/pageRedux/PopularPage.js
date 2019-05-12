@@ -6,10 +6,11 @@ import {connect} from 'react-redux';
 import actions from '../action/index'
 import PopularItem from '../common/PopularItem'
 import Toast from 'react-native-easy-toast'
-//import NavigationBar from '../common/NavigationBar';
+import NavigationBar from '../common/NavigationBar';
 import FavoriteDao from "../expand/dao/FavoriteDao";
 import {FLAG_STORAGE} from "../expand/dao/DataStore";
-//import FavoriteUtil from "../util/FavoriteUtil";
+import FavoriteUtil from "../util/FavoriteUtil";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const URL = 'https://api.github.com/search/repositories?q=';
@@ -17,30 +18,34 @@ const QUERY_STR = '&sort=stars';
 const THEME_COLOR='red';
 const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
 type Props = {};
+import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 
 
 
-
-export default class PopularPage extends Component<Props> {
+class PopularPage extends Component<Props> {
     constructor(props){ 
         super(props);
+        console.log(NavigationUtil.navigation);
         this.tabNames = ['Java','Android','IOS','React','React Native','PHP'];
+        const {onLoadLanguage} = this.props;
+        onLoadLanguage(FLAG_LANGUAGE.flag_key);
+        console.log('PopularPageBegin',this.props)
     }
 
 
     _genTabs(){ 
         const tabs = {};
+        const {keys,theme} = this.props;
+        console.log('_genTabs',keys);
         this.tabNames.forEach((item,index)=>{
-            console.log(item);
-            tabs[`tab${index}`] = { 
+            tabs[`tab${index}`] = {
                 //screen:PopularTab,
                 screen: props => <PopularTabPage {...props} tabLabel={item} />,
-                navigationOptions:{ 
+                navigationOptions:{
                     title:item
                 }
             }
         });
-        console.log(tabs);
         return createAppContainer(createMaterialTopTabNavigator(tabs, {
             //设置tab样式。
             tabBarOptions: {
@@ -72,22 +77,56 @@ export default class PopularPage extends Component<Props> {
             },            
         }))
     }
-    
+    renderRightButton(){
+        return <TouchableOpacity>
+            <View style={{padding:5,marginRight:8}}>
+                <Ionicons
+                    name={'ios-search'}
+                    size={24}
+                    style={{
+                        marginRight:8,
+                        alignSelf:'center',
+                        color:'white'
+                    }}
+                    />
+            </View>
+        </TouchableOpacity>
+    }
     render() {
         const HeadTab = this._genTabs();
+        let themeColor = THEME_COLOR
+        let statusBar = {
+            backgroundColor:themeColor,
+            barStyle:'light-content',
+        }
+        let navigationBar = <NavigationBar
+            title={'最热'}
+            statusBar={statusBar}
+            rightButton={this.renderRightButton()}
+            />;
+
         return (
             <View style={{flex:1, marginTop:30 }}>
+                {navigationBar}
                 <HeadTab />
             </View>
         )
     }
 }
 
+const mapPopularStateToProps = state => ({
+    keys: state.language.keys,
+    theme: state.theme.theme,
+});
+const mapPopularDispatchToProps = dispatch => ({
+    onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag))
+});
+export default connect(mapPopularStateToProps, mapPopularDispatchToProps)(PopularPage);
+
 class PopularTabCao extends Component<Props>{
 
 
     render(){
-        NavigationUtil.navigation = this.props.navigation;
         const {tabLabel} = this.props;
         return (
             <View style={styles.container}>
@@ -121,6 +160,16 @@ class PopularTab extends Component<Props>{
         return <PopularItem
             projectModel={item}
             onSelect={()=>{}}
+            themeColor = {THEME_COLOR}
+
+            onFavorite={(item,isFavorite)=>
+                FavoriteUtil.onFavorite(
+                    favoriteDao,
+                    item,
+                    isFavorite,
+                    FLAG_STORAGE.flag_popular
+                )
+            }
         />
     }
 
@@ -153,6 +202,7 @@ class PopularTab extends Component<Props>{
         const {onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite} = this.props;
         const store =this._store();
         const url = this.genFetchUrl(this.storeName);
+        console.log('store.pageIndex',store.pageIndex)
 
         if(loadMore){
             onLoadMorePopular(
@@ -177,23 +227,14 @@ class PopularTab extends Component<Props>{
     }
 
     render(){
-        //NavigationUtil.navigation = this.props.navigation;
-        let {popular} = this.props;
-        let store = popular[this.storeName];
-        if(!store){
-            store={
-                items:[],
-                isLoading:false,
-                projectModels:[],
-                hideLoadingMore:true
-            }
-        }
+        let store = this._store();
 
         return (<View style={{flex:1, marginTop:30 }}>
+
             <FlatList
-                data = {store.items}
+                data = {store.projectModels}
                 renderItem={data=>this.renderItem(data)}
-                keyExtractor={item => "" + item.item.id}
+                //keyExtractor={item=>''+item.item.id}
                 refreshControl={
                     <RefreshControl
                         title={'loading'}
@@ -267,6 +308,9 @@ const styles = StyleSheet.create({
     indicatorStyle:{ 
         height:2,
         backgroundColor:'#fff'
+    },
+    indicatorContainer:{
+        alignItems:'center'
     },
     labelStyle:{
         fontSize:13,

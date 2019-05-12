@@ -63,6 +63,19 @@ export async function _projectModels(showItems, favoriteDao, callback) {
         projectModels.push(new ProjectModel(showItems[i], Utils.checkFavorite(showItems[i], keys)));
     }
     doCallBack(callback,projectModels);
+    /*
+    * callback
+    * projectModels=>{
+        dispatch({
+            type: actionType,
+            items: fixItems,
+            projectModels:projectModels,
+            storeName,
+            pageIndex: 1,
+            ...params
+        })
+    }
+    * */
 }
 
 export const doCallBack = (callBack, object) => {

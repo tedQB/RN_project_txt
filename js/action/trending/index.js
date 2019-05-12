@@ -10,18 +10,18 @@ import {_projectModels, handleData} from '../ActionUtil'
  * @param favoriteDao
  * @returns {function(*=)}
  */
-export function onRefreshPopular(storeName, url, pageSize,favoriteDao) {
+export function onRefreshTrending(storeName, url, pageSize,favoriteDao) {
     return dispatch => {
         dispatch({
-            type: Types.POPULAR_REFRESH,
+            type: Types.TRENDING_REFRESH,
             storeName: storeName
         });
 
         let dataStore = new DataStore();
-        dataStore.fetchData(url, FLAG_STORAGE.flag_popular)//异步action与数据流
+        dataStore.fetchData(url, FLAG_STORAGE.flag_trending)//异步action与数据流
             .then(data => {
                 handleData(
-                    Types.POPULAR_REFRESH_SUCCESS,
+                    Types.TRENDING_REFRESH_SUCCESS,
                     dispatch,
                     storeName,
                     data,
@@ -32,7 +32,7 @@ export function onRefreshPopular(storeName, url, pageSize,favoriteDao) {
             .catch(error => {
                 console.log(error);
                 dispatch({
-                    type: Types.POPULAR_REFRESH_FAIL,
+                    type: Types.TRENDING_REFRESH_FAIL,
                     storeName,
                     error
                 });
@@ -50,7 +50,7 @@ export function onRefreshPopular(storeName, url, pageSize,favoriteDao) {
  * @param favoriteDao
  * @returns {function(*)}
  */
-export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = [],favoriteDao, callBack) {
+export function onLoadMoreTrending(storeName, pageIndex, pageSize, dataArray = [],favoriteDao, callBack) {
     console.log('loadmore',pageIndex);
     return dispatch => {
         setTimeout(() => {//模拟网络请求
@@ -59,7 +59,7 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
                     callBack('no more')
                 }
                 dispatch({
-                    type: Types.POPULAR_LOAD_MORE_FAIL,
+                    type: Types.TRENDING_LOAD_MORE_FAIL,
                     error: 'no more',
                     storeName: storeName,
                     pageIndex: --pageIndex,
@@ -69,7 +69,7 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
                 _projectModels(dataArray.slice(0, max),favoriteDao,data=>{
                     dispatch({
-                        type: Types.POPULAR_LOAD_MORE_SUCCESS,
+                        type: Types.TRENDING_LOAD_MORE_SUCCESS,
                         storeName,
                         pageIndex,
                         projectModels: data,
@@ -89,13 +89,13 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
  * @param favoriteDao
  * @returns {function(*)}
  */
-export function onFlushPopularFavorite(storeName, pageIndex, pageSize, dataArray = [], favoriteDao) {
+export function onFlushTrendingFavorite(storeName, pageIndex, pageSize, dataArray = [], favoriteDao) {
     return dispatch=>{
         //本次和载入的最大数量
         let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
         _projectModels(dataArray.slice(0, max),favoriteDao,data=>{
             dispatch({
-                type: Types.FLUSH_POPULAR_FAVORITE,
+                type: Types.TRENDING_FLUSH_FAVORITE,
                 storeName,
                 pageIndex,
                 projectModels: data,
