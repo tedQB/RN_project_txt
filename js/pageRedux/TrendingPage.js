@@ -7,6 +7,7 @@ import {
     View,
     FlatList,
     RefreshControl,
+    DeviceEventEmitter
 } from 'react-native';
 import {connect} from 'react-redux';
 import actions from '../action/index'
@@ -26,8 +27,9 @@ import FavoriteDao from "../expand/dao/FavoriteDao";
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 import ArrayUtil from "../util/ArrayUtil";
 import FavoriteUtil from "../util/FavoriteUtil";
-// import EventBus from "react-native-event-bus";
-// import EventTypes from "../util/EventTypes";
+import EventBus from "react-native-event-bus";
+import EventTypes from "../util/EventTypes";
+
 
 const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending);
 type Props = {};
@@ -192,11 +194,28 @@ class TrendingTab extends Component<Props> {
 
     componentDidMount(){
         this.loadData();
+        this.timeSpanChangeListener = DeviceEventEmitter.addListener(EVENT_TYPE_TIME_SPAN_CHANGE,(timeSpan)=>{
+            this.timeSpan = timeSpan;
+            this.loadData();
+        })
 
+        EventBus.getInstance().addListener(EventTypes.favoriteChanged_trending, this.favoriteChangeListener = () => {
+            this.isFavoriteChanged = true;
+        });
+        EventBus.getInstance().addListener(EventTypes.bottom_tab_select, this.bottomTabSelectListener = (data) => {
+            if (data.to === 1 && this.isFavoriteChanged) {
+                console.log("chufa1");
+                this.loadData(null, true);
+            }
+        })
     }
 
     componentWillUnmount() {
-
+        if (this.timeSpanChangeListener) {
+            this.timeSpanChangeListener.remove();
+        }
+        EventBus.getInstance().removeListener(this.favoriteChangeListener);
+        EventBus.getInstance().removeListener(this.bottomTabSelectListener);
     }
 
     loadData(loadMore, refreshFavorite) {

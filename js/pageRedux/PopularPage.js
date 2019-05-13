@@ -11,14 +11,15 @@ import FavoriteDao from "../expand/dao/FavoriteDao";
 import {FLAG_STORAGE} from "../expand/dao/DataStore";
 import FavoriteUtil from "../util/FavoriteUtil";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 const THEME_COLOR='red';
 const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular)
 type Props = {};
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
+
+import EventBus from "react-native-event-bus";
+import EventTypes from "../util/EventTypes";
 
 
 
@@ -31,7 +32,6 @@ class PopularPage extends Component<Props> {
         onLoadLanguage(FLAG_LANGUAGE.flag_key);
         console.log('PopularPageBegin',this.props)
     }
-
 
     _genTabs(){ 
         const tabs = {};
@@ -150,10 +150,25 @@ class PopularTab extends Component<Props>{
         super(props);
         const {tabLabel} = this.props;
         this.storeName = tabLabel;
+        this.isFavoriteChanged = false;
     }
 
     componentDidMount(){
         this.loadData();
+        EventBus.getInstance().addListener(EventTypes.favorite_changed_popular,this.favoriteChangeListener = ()=>{
+           this.isFavoriteChanged =true;
+        });
+        EventBus.getInstance().addListener(EventTypes.bottom_tab_select,this.bottomTabSelectListener = (data)=>{
+            if(data.to===0 && this.isFavoriteChanged) {
+                console.log("chufa0")
+                this.loadData(null,true)
+            }
+        })
+    }
+
+    componentWillUnmount(): void {
+        EventBus.getInstance().removeListener(this.favoriteChangeListener)
+        EventBus.getInstance().removeListener(this.bottomTabSelectListener)
     }
 
     renderItem(data){
