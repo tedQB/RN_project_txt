@@ -53,7 +53,8 @@ class PopularPage extends Component<Props> {
                 upperCaseLabel: false,
                 scrollEnabled:true,
                 style:{
-                    backgroundColor:'#678'
+                    backgroundColor:'#678',
+                    height:45
                 },
                 labelStyle: styles.labelStyle,
                 indicatorStyle: styles.indicatorStyle
@@ -157,11 +158,19 @@ class PopularTab extends Component<Props>{
 
     renderItem(data){
         const item = data.item;
+        const {theme} = this.props;
         return <PopularItem
             projectModel={item}
-            onSelect={()=>{}}
-            themeColor = {THEME_COLOR}
+            onSelect={(callback)=>{
+                NavigationUtil.goPage({
+                    theme,
+                    projectModel:item,
+                    flag:FLAG_STORAGE.flag_popular,
+                    callback,
+                },'DetailPage')
 
+            }}
+            themeColor = {THEME_COLOR}
             onFavorite={(item,isFavorite)=>
                 FavoriteUtil.onFavorite(
                     favoriteDao,

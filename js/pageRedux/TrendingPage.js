@@ -57,7 +57,7 @@ class TrendingPage extends Component<Props> {
                     {...props}
                     timeSpan={this.state.timeSpan}
                     tabLabel={item.name}
-                    theme={theme}/>,
+                    theme={theme} />,
                 navigationOptions: {
                     title: item.name
                 }
@@ -148,7 +148,7 @@ class TrendingPage extends Component<Props> {
                     scrollEnabled: true,
                     style: {
                         backgroundColor: '#678',
-                        height:40
+                        height:45,
                     },
                     labelStyle: styles.labelStyle,
                     indicatorStyle: styles.indicatorStyle
@@ -247,8 +247,6 @@ class TrendingTab extends Component<Props> {
     renderItem(data){
         const item = data.item;
         const {theme} = this.props;
-        const {navigation} = this.props;
-        NavigationUtil.navigation = this.props.navigation;
 
         return <TrendingItem
             projectModel={item}
@@ -256,7 +254,7 @@ class TrendingTab extends Component<Props> {
             onSelect={(callback)=>{
                 NavigationUtil.goPage({
                     theme,
-                    projectMode:item,
+                    projectModel:item,
                     flag:FLAG_STORAGE.flag_trending,
                     callback,
                 },'DetailPage')
@@ -339,15 +337,17 @@ const styles = StyleSheet.create({
     },
     tabStyle: {
         // minWidth: 50 //fix minWidth会导致tabStyle初次加载时闪烁
+        minWidth:50,
         padding: 0
     },
     indicatorStyle: {
         height: 2,
         backgroundColor: 'white'
     },
-    labelStyle: {
-        fontSize: 13,
-        margin: 0,
+    labelStyle:{
+        fontSize:13,
+        marginTop:6,
+        marginBottom:6
     },
     indicatorContainer: {
         alignItems: "center"

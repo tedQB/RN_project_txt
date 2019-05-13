@@ -19,8 +19,7 @@ export default class TrendingItem extends BaseItem {
                     </Text>
                     <HTMLView
                         value={description}
-                        onLinkPress={(url) => {
-                        }}
+                        onLinkPress={(url) => {}}
                         stylesheet={{
                             p: styles.description,
                             a: styles.description,
