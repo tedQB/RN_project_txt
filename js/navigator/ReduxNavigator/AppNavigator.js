@@ -1,9 +1,10 @@
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation'
 
-import WelcomePage from '../../pageRedux/WelcomePage';
-import AboutPage from '../../pageRedux/AboutPage';
+import WelcomePage from '../../pageRedux/WebViewPage';
+import AboutPage from '../../pageRedux/WebViewPage';
 import DetailPage from '../../pageRedux/DetailPage';
 import HomePage from '../../pageRedux/HomePage';
+import WebViewPage from '../../pageRedux/WebViewPage';
 import {connect} from 'react-redux';
 import {createReactNavigationReduxMiddleware, createReduxContainer, reduxifyNavigator  } from 'react-navigation-redux-helpers'
 
@@ -34,13 +35,19 @@ const MainNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }
+    },
+    WebViewPage: {
+        screen: WebViewPage,
+        navigationOptions: {
+            header: null
+        }
+    },
 });
 
 export const rootCom = 'Init'; //设置根路由
 
 export const RootNavigator = createAppContainer(createSwitchNavigator({
-    Init: InitNavigator,
+    Init: MainNavigator,
     Main: MainNavigator,
 },{
     navigationOptions:{

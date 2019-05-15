@@ -189,7 +189,6 @@ const FavoriteTabPage = connect(mapStateToProps,mapDispatchToProps)(FavoriteTab)
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        marginTop:30
     },
     tabStyle:{
         padding:0

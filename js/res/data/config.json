@@ -1,0 +1,86 @@
+{
+  "aboutMe":{
+    "Tutorial": {
+      "name": "course",
+      "icon": "ios-bookmarks",
+      "items": [
+        {
+          "title": "React Native1",
+          "url": "https://www.baidu.com"
+        },
+        {
+          "title": "React Native2",
+          "url": "https://www.baidu.com"
+        }
+      ]
+    }
+  },
+  "Blog": {
+    "name": "技术博客",
+    "icon": "ios-laptop",
+    "items": [
+      {
+        "title": "个人博客",
+        "url": "https://tedQB.github.io"
+      },
+      {
+        "title": "CSDN",
+        "url": "https://blog.csdn.net/tedQB"
+      },
+      {
+        "title": "简书",
+        "url": "https://www.baidu.com"
+      },
+      {
+        "title": "GitHub",
+        "url": "https://github.com/tedQB"
+      }
+    ]
+  },
+  "Contact": {
+    "name": "联系方式",
+    "icon": "ios-contacts",
+    "items": {
+      "QQ": {
+        "title": "QQ",
+        "account": "121914336"
+      },
+      "Email": {
+        "title": "Email",
+        "account": "crazycodeboy@gmail.com"
+      }
+    }
+  },
+  "QQ": {
+    "name": "技术交流群",
+    "icon": "ios-chatbubbles",
+    "items": [
+      {
+        "title": "移动开发者技术分享群",
+        "account": "335939197"
+      },
+      {
+        "title": "React Native学习交流群",
+        "account": "165774887"
+      }
+    ]
+  },
+  "info": {
+    "html_url": "https://github.com/crazycodeboy/",
+    "url": "https://api.github.com/repos/crazycodeboy/",
+    "currentRepoUrl": "https://api.github.com/repos/crazycodeboy/GitHubPopular"
+  },
+  "author": {
+    "name": "kapaidashu",
+    "description": "专注于移动开发，分享知识，共享快乐。",
+    "avatar": "http://avatar.csdn.net/1/1/E/1_fengyuzhengfan.jpg",
+    "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg",
+    "url": "https://tedQB.github.io"
+  },
+  "app": {
+    "name": "GitHub Popular",
+    "description": "查看GitHub最受欢迎与最热项目的App,它基于React Native",
+    "avatar": "http://www.devio.org/io/GitHubPopular/img/ic_app.png",
+    "backgroundImg": "http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg"
+  }
+}

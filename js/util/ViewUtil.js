@@ -22,7 +22,7 @@ export default class ViewUtil {
             >
                 <View style={{alignItems:'center',flexDirection:'row'}}>
                     {Icons && icon?
-                        <Icon
+                        <Icons
                         name={icon}
                         size={16}
                         style={{color:color,marginRight:10}}

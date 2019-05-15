@@ -352,7 +352,6 @@ const TrendingTabPage = connect(mapStateToProps, mapDispatchToProps)(TrendingTab
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:30
     },
     tabStyle: {
         // minWidth: 50 //fix minWidth会导致tabStyle初次加载时闪烁

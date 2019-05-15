@@ -107,7 +107,7 @@ class PopularPage extends Component<Props> {
             />;
 
         return (
-            <View style={{flex:1, marginTop:30 }}>
+            <View style={{flex:1}}>
                 {navigationBar}
                 <HeadTab />
             </View>
@@ -253,7 +253,7 @@ class PopularTab extends Component<Props>{
     render(){
         let store = this._store();
 
-        return (<View style={{flex:1, marginTop:30 }}>
+        return (<View style={{flex:1}}>
 
             <FlatList
                 data = {store.projectModels}
