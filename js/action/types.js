@@ -1,6 +1,9 @@
 export default {
+
+//主题相关
     THEME_CHANGE:'THEME_CHANGE', //主题更改
     THEME_INIT:'THEME_INIT', //主题初始化
+    SHOW_THEME_VIEW:'SHOW_THEME_VIEW', //显示自定义主题面板
 
 //最新
     POPULAR_REFRESH:'POPULAR_REFRESH', //下拉刷新

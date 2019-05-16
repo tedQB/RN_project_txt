@@ -36,11 +36,10 @@ class PopularPage extends Component<Props> {
     _genTabs(){ 
         const tabs = {};
         const {keys,theme} = this.props;
-        console.log('_genTabs',keys);
         this.tabNames.forEach((item,index)=>{
             tabs[`tab${index}`] = {
                 //screen:PopularTab,
-                screen: props => <PopularTabPage {...props} tabLabel={item} />,
+                screen: props => <PopularTabPage {...props} tabLabel={item} theme={theme}/>,
                 navigationOptions:{
                     title:item
                 }
@@ -53,7 +52,7 @@ class PopularPage extends Component<Props> {
                 upperCaseLabel: false,
                 scrollEnabled:true,
                 style:{
-                    backgroundColor:'#678',
+                    backgroundColor:theme.themeColor,
                     height:45
                 },
                 labelStyle: styles.labelStyle,
@@ -79,30 +78,36 @@ class PopularPage extends Component<Props> {
         }))
     }
     renderRightButton(){
-        return <TouchableOpacity>
-            <View style={{padding:5,marginRight:8}}>
+        const {theme} = this.props;
+        return <TouchableOpacity
+            onPress={() => {
+               // AnalyticsUtil.track("SearchButtonClick");
+                NavigationUtil.goPage({theme}, 'SearchPage')
+            }}
+        >
+            <View style={{padding: 5, marginRight: 8}}>
                 <Ionicons
                     name={'ios-search'}
                     size={24}
                     style={{
-                        marginRight:8,
-                        alignSelf:'center',
-                        color:'white'
-                    }}
-                    />
+                        marginRight: 8,
+                        alignSelf: 'center',
+                        color: 'white',
+                    }}/>
             </View>
         </TouchableOpacity>
     }
     render() {
         const HeadTab = this._genTabs();
-        let themeColor = THEME_COLOR
+        const {keys, theme} = this.props;
         let statusBar = {
-            backgroundColor:themeColor,
-            barStyle:'light-content',
-        }
+            backgroundColor: theme.themeColor,
+            barStyle: 'light-content',
+        };
         let navigationBar = <NavigationBar
             title={'最热'}
             statusBar={statusBar}
+            style={theme.styles.navBar}
             rightButton={this.renderRightButton()}
             />;
 
@@ -176,6 +181,7 @@ class PopularTab extends Component<Props>{
         const {theme} = this.props;
         return <PopularItem
             projectModel={item}
+            theme={theme}
             onSelect={(callback)=>{
                 NavigationUtil.goPage({
                     theme,

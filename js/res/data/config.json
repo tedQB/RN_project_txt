@@ -1,5 +1,5 @@
 {
-  "aboutMe":{
+  "aboutMe": {
     "Tutorial": {
       "name": "course",
       "icon": "ios-bookmarks",
@@ -13,57 +13,57 @@
           "url": "https://www.baidu.com"
         }
       ]
+    },
+    "Blog": {
+      "name": "技术博客",
+      "icon": "ios-laptop",
+      "items": [
+        {
+          "title": "个人博客",
+          "url": "https://tedQB.github.io"
+        },
+        {
+          "title": "CSDN",
+          "url": "https://blog.csdn.net/tedQB"
+        },
+        {
+          "title": "简书",
+          "url": "https://www.baidu.com"
+        },
+        {
+          "title": "GitHub",
+          "url": "https://github.com/tedQB"
+        }
+      ]
+    },
+    "Contact": {
+      "name": "联系方式",
+      "icon": "ios-contacts",
+      "items": {
+        "QQ": {
+          "title": "QQ",
+          "account": "121914336"
+        },
+        "Email": {
+          "title": "Email",
+          "account": "crazycodeboy@gmail.com"
+        }
+      }
+    },
+    "QQ": {
+      "name": "技术交流群",
+      "icon": "ios-chatbubbles",
+      "items": [
+        {
+          "title": "移动开发者技术分享群",
+          "account": "335939197"
+        },
+        {
+          "title": "React Native学习交流群",
+          "account": "165774887"
+        }
+      ]
     }
-  },
-  "Blog": {
-    "name": "技术博客",
-    "icon": "ios-laptop",
-    "items": [
-      {
-        "title": "个人博客",
-        "url": "https://tedQB.github.io"
-      },
-      {
-        "title": "CSDN",
-        "url": "https://blog.csdn.net/tedQB"
-      },
-      {
-        "title": "简书",
-        "url": "https://www.baidu.com"
-      },
-      {
-        "title": "GitHub",
-        "url": "https://github.com/tedQB"
-      }
-    ]
-  },
-  "Contact": {
-    "name": "联系方式",
-    "icon": "ios-contacts",
-    "items": {
-      "QQ": {
-        "title": "QQ",
-        "account": "121914336"
-      },
-      "Email": {
-        "title": "Email",
-        "account": "crazycodeboy@gmail.com"
-      }
-    }
-  },
-  "QQ": {
-    "name": "技术交流群",
-    "icon": "ios-chatbubbles",
-    "items": [
-      {
-        "title": "移动开发者技术分享群",
-        "account": "335939197"
-      },
-      {
-        "title": "React Native学习交流群",
-        "account": "165774887"
-      }
-    ]
   },
   "info": {
     "html_url": "https://github.com/crazycodeboy/",

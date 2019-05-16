@@ -18,7 +18,7 @@ export default class ViewUtil {
         return (
             <TouchableOpacity
                 onPress = {callBack}
-                style = {styles}
+                style = {styles.setting_item_container}
             >
                 <View style={{alignItems:'center',flexDirection:'row'}}>
                     {Icons && icon?

@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux'
-import theme from './theme'
 import popular from './popular'
 import trending from './trending'
 import language from './language'
 import favorite from './favorite'
+import theme from './theme'
 
 import {rootCom, RootNavigator} from "../navigator/ReduxNavigator/AppNavigator";
 

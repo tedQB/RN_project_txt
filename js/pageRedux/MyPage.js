@@ -16,7 +16,7 @@ type Props = {};
 class MyPage extends Component<Props> {
     getItem(menu) {
         const {theme} = this.props;
-        return ViewUtil.getMenuItem(()=>this.onClick(menu),menu,theme);
+        return ViewUtil.getMenuItem(()=>this.onClick(menu),menu,theme.themeColor);
     }
 
     onClick(menu){
@@ -75,14 +75,14 @@ class MyPage extends Component<Props> {
     render() {
       const {theme} = this.props;
       let statusBar = {
-          backgroundColor:theme,
+          backgroundColor:theme.themeColor,
           barStyle:'light-content'
       };
       let navigationBar =
           <NavigationBar
             title={'我的'}
             statusBar={statusBar}
-            style={theme}
+            style={theme.styles.navBar}
           />;
 
       return (
@@ -99,7 +99,7 @@ class MyPage extends Component<Props> {
                               size={40}
                               style={{
                                   marginRight:10,
-                                  color:theme
+                                  color:theme.themeColor
                               }}
                           />
                           <Text>Github Popular</Text>
@@ -110,7 +110,7 @@ class MyPage extends Component<Props> {
                         style={{
                             marginRight:10,
                             alignSelf:'center',
-                            color:theme
+                            color:theme.themeColor
                         }}
                       />
 
@@ -159,7 +159,11 @@ const mapStateToProps = state =>({
     theme:state.theme.theme
 });
 
-export default connect(mapStateToProps)(MyPage);
+const mapDispatchToProps = dispatch=>({
+    onShowCustomThemeView:(show)=>dispatch(actions.onShowCustomThemeView(show))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(MyPage);
 
 const styles = StyleSheet.create({
     container: {

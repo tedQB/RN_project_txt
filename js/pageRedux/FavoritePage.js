@@ -31,7 +31,7 @@ class FavoritePage extends Component<Props> {
         let navigationBar = <NavigationBar
             title={'收藏'}
             statusBar={statusBar}
-            //style={theme.styles.navBar}
+            style={theme.styles.navBar}
             />
         const TabNavigator = createAppContainer(createMaterialTopTabNavigator({
             'Popular':{
@@ -60,7 +60,7 @@ class FavoritePage extends Component<Props> {
                 tabStyle:styles.tabStyle,
                 upperCaseLabel:false,
                 style:{
-                    backgroundColor:theme,
+                    backgroundColor:theme.themeColor,
                     height:45,
                 },
                 indicatorStyle:styles.indicatorStyle,

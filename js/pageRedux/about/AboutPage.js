@@ -14,7 +14,11 @@ export default class AboutPage extends Component<Props>{
     constructor(props){
         super(props);
         this.params = this.props.navigation.state.params;
-
+        this.aboutCommon = new AboutCommon({
+            ...this.params,
+            navigation:this.props.navigation,
+            flagAbout:FLAG_ABOUT.flag_about
+        },data=>this.setState({...data}))
         this.state = {
             data:config,
         }
@@ -55,7 +59,7 @@ export default class AboutPage extends Component<Props>{
 
     getItem(menu){
         const {theme} = this.params;
-        return ViewUtil.getMenuItem(()=>this.onClick(menu).menu,theme)
+        return ViewUtil.getMenuItem(()=>this.onClick(menu),menu,theme)
     }
     render() {
         const content = <View>

@@ -139,7 +139,7 @@ class TrendingPage extends Component<Props> {
         let navigationBar = <NavigationBar
             titleView={this.renderTitleView()}
             statusBar={statusBar}
-            style={{height:50}}
+            style={theme.styles.navBar}
         />;
         const TabNavigator = keys.length?createAppContainer(createMaterialTopTabNavigator(
             this._genTabs(), {
@@ -149,7 +149,7 @@ class TrendingPage extends Component<Props> {
                     upperCaseLabel: false,
                     scrollEnabled: true,
                     style: {
-                        backgroundColor: '#678',
+                        backgroundColor: theme.themeColor,
                         height:45,
                     },
                     labelStyle: styles.labelStyle,
