@@ -199,6 +199,35 @@ react-react run-ios/android
 * 开发效率：Android和iOS平台可复用很多组件，仅部分代码需要各自平台分别维护，所以比开发两个平台原生应用效率要高得多。加上本身可动态渲染的能力，不用重新编译，Command⌘+R即可重新渲染界面，开发效率更是惊人地快。
 
 
+# 对比Flutter 
+
+
+1. 技术架构上
+    
+React-Native、Weex 核心是通过 Javascript 开发，执行时需要 Javascript 解释器，UI 是通过原生控件渲染。
+Flutter 与用于构建移动应用程序的其它大多数框架不同，因为 Flutter 既不使用 WebView，也不使用操作系统的原生控件。 
+Flutter 使用自己的高性能渲染引擎来绘 制 widget。Flutter 使用 C、C ++、Dart 和 Skia（2D渲染引擎）构建。
+
+2. 性能上 
+
+RN的效率由于是将View编译成了原生View,所以效率上要比基于Cordova的HTML5高很多，但是它也有效率问题,RN的渲染机制是基于前端框架的考虑,复杂的UI渲染是需要依赖多个view叠加
+Flutter 使用了新的语言Dart,避免了RN的那种通过桥接器与Javascript通讯导致效率低下的问题,所以在性能方面比RN更高一筹
+  
+3. 高频数据交换下
+
+ReactNative在满帧的情况下实际是卡住的，不能切换路由，后端服务关闭后仍然会执行一段时间，证明有事件堆积。
+而Flutter不会影响路由切换，因为Flutter的路由切换在ui主线程上，而react-navigation跑在js线程上。Flutter虽不满帧但可以实时更新数据。
+在某些高性能场景下仍需要跨平台，Flutter是你唯一的选择！
+
+4. UI 一致性
+
+Flutter 因为是自己做的渲染，因此在iOS和Android的效果基本完全一致。
+ReactNative存在将RN控件转换为对应平台原生控件的过程，存在一定的差异
+
+5. App体积  
+
+Flutter较大
+
 
 # 项目中遇到的问题，
 
@@ -279,30 +308,6 @@ react-react run-ios/android
             />
     }
    ```
-# 对比Flutter 
-
-
-1. 技术架构上
-    
-React-Native、Weex 核心是通过 Javascript 开发，执行时需要 Javascript 解释器，UI 是通过原生控件渲染。
-Flutter 与用于构建移动应用程序的其它大多数框架不同，因为 Flutter 既不使用 WebView，也不使用操作系统的原生控件。 
-Flutter 使用自己的高性能渲染引擎来绘 制 widget。Flutter 使用 C、C ++、Dart 和 Skia（2D渲染引擎）构建。
-
-2. 性能上 
-
-RN的效率由于是将View编译成了原生View,所以效率上要比基于Cordova的HTML5高很多，但是它也有效率问题,RN的渲染机制是基于前端框架的考虑,复杂的UI渲染是需要依赖多个view叠加
-Flutter 使用了新的语言Dart,避免了RN的那种通过桥接器与Javascript通讯导致效率低下的问题,所以在性能方面比RN更高一筹
-  
-3. 高频数据交换下
-ReactNative在满帧的情况下实际是卡住的，不能切换路由，后端服务关闭后仍然会执行一段时间，证明有事件堆积。
-而Flutter不会影响路由切换，因为Flutter的路由切换在ui主线程上，而react-navigation跑在js线程上。Flutter虽不满帧但可以实时更新数据。
-在某些高性能场景下仍需要跨平台，Flutter是你唯一的选择！
-
-4. UI 一致性
-Flutter 因为是自己做的渲染，因此在iOS和Android的效果基本完全一致。
-ReactNative存在将RN控件转换为对应平台原生控件的过程，存在一定的差异
-
-5. App体积  Flutter较大
 
 
 ## License
