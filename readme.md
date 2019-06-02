@@ -21,7 +21,7 @@ react-react run-ios/android
 ```
 
 ## 预览
-<img src="https://github.com/tedQB/RN_project_txt/blob/master/img/01.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/02.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/03.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/04.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/05.png?raw=true" width=200>
+<img src="https://github.com/tedQB/RN_project_txt/blob/master/img/02.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/03.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/04.png?raw=true" width=200><img src="https://github.com/tedQB/RN_project_txt/blob/master/img/05.png?raw=true" width=200>
 
 ## 目标功能
 
